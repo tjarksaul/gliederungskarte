@@ -1,0 +1,168 @@
+{
+  "03 3 52 011": {
+    "shortname": "Cuxhaven",
+    "fullname": "Ortsgruppe Cuxhaven e.V.",
+    "address": "Am Schleusenpriel 12\n27472 Cuxhaven",
+    "telefon": {
+      "url": "tel:+49472123284",
+      "print": "+49 4721 23284"
+    },
+    "website": {
+      "url": "https://cuxhaven.dlrg.de",
+      "print": "cuxhaven.dlrg.de"
+    }
+  },
+  "03 3 52 050": {
+    "shortname": "Wehdel",
+    "fullname": "Ortsgruppe Wehdel e.V.",
+    "address": "Brink 6\n27619 Schiffdorf",
+    "telefon": {
+      "url": "tel:+494719412533",
+      "print": "+49 471 9412533"
+    },
+    "website": {
+      "url": "https://wehdel.dlrg.de",
+      "print": "wehdel.dlrg.de"
+    }
+  },
+  "03 3 52 060": {
+    "shortname": "Hagen im Bremischen",
+    "fullname": "Ortsgruppe Hagen im Bremischen e.V.",
+    "address": "Pferdehamm 3\n27628 Hagen im Bremischen",
+    "telefon": {
+      "url": "tel:+4947466063",
+      "print": "+49 4746 6063"
+    },
+    "website": {
+      "url": "https://hagen-im-bremischen.dlrg.de",
+      "print": "hagen-im-bremischen.dlrg.de"
+    }
+  },
+  "03 3 52 061": {
+    "shortname": "Dorum",
+    "fullname": "Ortsgruppe Dorum e.V.",
+    "address": "Osterbüttel 5\n27639 Wurster Nordseeküste",
+    "website": {
+      "url": "https://dorum.dlrg.de",
+      "print": "dorum.dlrg.de"
+    }
+  },
+  "03 3 52 5404": {
+    "shortname": "Lamstedt",
+    "fullname": "Ortsgruppe Lamstedt e.V.",
+    "address": "Ortsstr. 8a\n21769 Hollnseth",
+    "website": {
+      "url": "https://lamstedt.dlrg.de",
+      "print": "lamstedt.dlrg.de"
+    }
+  },
+  "03 3 52 5411": {
+    "shortname": "Otterndorf",
+    "fullname": "Ortsgruppe Otterndorf e.V.",
+    "address": "Schleusenstrasse 149\n21762 Otterndorf",
+    "website": {
+      "url": "https://otterndorf.dlrg.de",
+      "print": "otterndorf.dlrg.de"
+    }
+  },
+  "03 3 56 005": {
+    "shortname": "Lilienthal",
+    "fullname": "Ortsgruppe Lilienthal e.V.",
+    "address": "Heideweg 51\n28865 Lilienthal",
+    "telefon": {
+      "url": "tel:+494298469562",
+      "print": "+49 4298 469562"
+    },
+    "website": {
+      "url": "https://lilienthal.dlrg.de",
+      "print": "lilienthal.dlrg.de"
+    }
+  },
+  "03 3 56 007": {
+    "shortname": "Osterholz-Scharmbeck",
+    "fullname": "Ortsgruppe Osterholz-Scharmbeck e.V.",
+    "address": "Am Barkhof 5\n27711 Osterholz-Scharmbeck",
+    "telefon": {
+      "url": "tel:+4947913172",
+      "print": "+49 4791 3172"
+    },
+    "website": {
+      "url": "https://osterholz-scharmbeck.dlrg.de",
+      "print": "osterholz-scharmbeck.dlrg.de"
+    }
+  },
+  "03 3 56 008": {
+    "shortname": "Ritterhude",
+    "fullname": "Ortsgruppe Ritterhude e.V.",
+    "address": "Goethestraße 27\n27721 Ritterhude",
+    "website": {
+      "url": "https://ritterhude.dlrg.de",
+      "print": "ritterhude.dlrg.de"
+    }
+  },
+  "03 3 56 009": {
+    "shortname": "Schwanewede",
+    "fullname": "Ortsgruppe Schwanewede e.V.",
+    "address": "Anne-Frank-Weg 23\n28790 Schwanewede",
+    "telefon": {
+      "url": "tel:+4942099868495",
+      "print": "+49 4209 9868495"
+    },
+    "website": {
+      "url": "https://schwanewede.dlrg.de",
+      "print": "schwanewede.dlrg.de"
+    }
+  },
+  "03 3 56 011": {
+    "shortname": "Worpswede",
+    "fullname": "Ortsgruppe Worpswede e.V.",
+    "address": "Hammeweg 10\n27726 Worpswede",
+    "telefon": {
+      "url": "tel:+4947929878393",
+      "print": "+49 4792 9878393"
+    },
+    "website": {
+      "url": "https://worpswede.dlrg.de",
+      "print": "worpswede.dlrg.de"
+    }
+  },
+  "03 3 56 5401": {
+    "shortname": "Hambergen",
+    "fullname": "Ortsgruppe Hambergen e.V.",
+    "address": "Wehldorfer Straße 29A\n27616 Beverstedt",
+    "telefon": {
+      "url": "tel:+4917683446113",
+      "print": "+49 176 83446113"
+    },
+    "website": {
+      "url": "https://hambergen.dlrg.de",
+      "print": "hambergen.dlrg.de"
+    }
+  },
+  "03 3 52 030": {
+    "shortname": "Langen",
+    "fullname": "Ortsgruppe Langen e.V.",
+    "address": "Brandenburger Str. 17\n27607 Geestland",
+    "telefon": {
+      "url": "tel:+4947439569693",
+      "print": "+49 4743 9569693"
+    },
+    "website": {
+      "url": "https://langen-sievern.dlrg.de",
+      "print": "langen-sievern.dlrg.de"
+    }
+  },
+  "03 3 52 5402": {
+    "shortname": "Bederkesa",
+    "fullname": "Ortsgruppe Samtgemeinde Bederkesa e.V.",
+    "address": "Oberster Kamp 2\n27624 Geestland",
+    "telefon": {
+      "url": "tel:+4947457689",
+      "print": "+49 4745 7689"
+    },
+    "website": {
+      "url": "https://samtgemeinde-bederkesa.dlrg.de",
+      "print": "samtgemeinde-bederkesa.dlrg.de"
+    }
+  }
+}
