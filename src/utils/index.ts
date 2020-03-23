@@ -1,1 +1,2 @@
-export * from 'utils/html'
+export * from './html'
+export * from './array'

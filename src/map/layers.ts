@@ -1,14 +1,24 @@
 import { AnySourceData, Map } from 'mapbox-gl'
-import bezirkskarte from 'json/karte.json'
 import { FeatureCollection, Polygon } from 'geojson'
 
-const kartenSource: AnySourceData = {
-  type: 'geojson',
-  data: bezirkskarte as FeatureCollection<Polygon>,
+let _kartenSource: AnySourceData
+
+async function kartenSource(): Promise<AnySourceData> {
+  if (!_kartenSource) {
+    const source = (await import('json/karte.json')).default
+    _kartenSource = {
+      type: 'geojson',
+      data: source as FeatureCollection<Polygon>
+    }
+  }
+
+  return _kartenSource
 }
 
-function loadLayers(map: Map): Map {
-  map.addSource('bezirkskarte', kartenSource)
+async function loadLayers(map: Map): Promise<Map> {
+  const source = await kartenSource()
+
+  map.addSource('bezirkskarte', source)
 
   map.addLayer({
     id: 'bezirkskarte-fill-hasog',

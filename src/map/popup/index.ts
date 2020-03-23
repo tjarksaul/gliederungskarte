@@ -1,12 +1,10 @@
 import { Map, MapMouseEvent, Point } from 'mapbox-gl'
-import { createElementFromHTML } from 'utils'
-import ogInfo from 'json/oginfo.json'
-import { OgInfos } from 'dtos'
-import { separator } from 'utils/array'
 import { Feature } from 'geojson'
+import { createElementFromHTML, separator } from 'utils'
+import { OgInfos } from 'dtos'
 import './popup.scss'
 
-const ogInfos = ogInfo as OgInfos
+let _ogInfos: OgInfos
 
 let popup: Node | undefined
 
@@ -16,7 +14,18 @@ export function removePopup(): void {
   }
 }
 
-function createPopup(hoveredFeature: Feature, point: Point): Node | undefined {
+async function ogInfos(): Promise<OgInfos> {
+  if (!_ogInfos) {
+    _ogInfos = (await import('json/oginfo.json')).default
+  }
+
+  return _ogInfos
+}
+
+async function createPopup(
+  hoveredFeature: Feature,
+  point: Point,
+): Promise<Node | undefined> {
   const { x, y } = point
   if (!hoveredFeature.properties) {
     return
@@ -26,8 +35,10 @@ function createPopup(hoveredFeature: Feature, point: Point): Node | undefined {
 
   let popupContent: string
 
-  if (hasOG && ogInfos[AGS]) {
-    const ogInfo = ogInfos[AGS]
+  const infos = await ogInfos()
+
+  if (hasOG && infos[AGS]) {
+    const ogInfo = infos[AGS]
     popupContent = `
         <h4>${ogInfo.fullname}</h4>
         <p>${ogInfo.address.replace('\n', '<br/>')}</p>
@@ -38,7 +49,7 @@ function createPopup(hoveredFeature: Feature, point: Point): Node | undefined {
   } else {
     const agsIds = JSON.parse(ogAgsIds) as Array<string>
     const ogen = agsIds
-      .map(ags => ogInfos[ags])
+      .map(ags => infos[ags])
       .map(
         info =>
           `<a class="popup__link" href="${info.website.url}" target="_blank">${info.shortname}</a>`,
@@ -68,7 +79,7 @@ function createPopup(hoveredFeature: Feature, point: Point): Node | undefined {
       <div class="popup" style="${vertical}; ${horizontal}"> 
         <div id="popup__content" class="popup__content">
           <button id="popup__close-button" class="popup__close-button" type="button" aria-label="Close popup">×</button>
-          <div class="og-info">
+          <div class="popup__og-info">
             <h3>${Name}</h3>            
             ${popupContent}
           </div>
@@ -92,7 +103,7 @@ function createPopup(hoveredFeature: Feature, point: Point): Node | undefined {
   return popup
 }
 
-function handler(ev: MapMouseEvent, map: Map): Map {
+async function handler(ev: MapMouseEvent, map: Map): Promise<Map> {
   removePopup()
 
   const features = map.queryRenderedFeatures(ev.point)
@@ -106,7 +117,7 @@ function handler(ev: MapMouseEvent, map: Map): Map {
     )
 
   if (hoveredFeature && hoveredFeature.properties) {
-    popup = createPopup(hoveredFeature, ev.point)
+    popup = await createPopup(hoveredFeature, ev.point)
 
     if (popup) {
       document.body.appendChild(popup)
