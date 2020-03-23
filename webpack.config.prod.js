@@ -34,7 +34,7 @@ module.exports = {
   output: {
     path: DIST_PATH,
     publicPath: '',
-    filename: '[name].js',
+    filename: '[name].[contenthash].js',
   },
   plugins: [
     new HtmlWebpackPlugin({
