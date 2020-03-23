@@ -4,88 +4,10 @@
   <meta charset="utf-8"/>
   <title>Bezirkskarte</title>
   <link href="https://api.mapbox.com/mapbox-gl-js/v1.8.1/mapbox-gl.css" rel="stylesheet" />
-  <style type="text/css">
-    body {
-      padding: 0;
-      margin: 0;
-      font-family: 'DLRG Univers 55 Roman', 'Arial', 'Helvetica', sans-serif;
-      font-size: 12px;
-      overflow: hidden;
-    }
-
-    #root {
-      position: absolute;
-      top: 0;
-      bottom: 0;
-      width: 100%;
-    }
-
-    #touchInfo {
-      position: absolute;
-      top: 0;
-      bottom: 0;
-      width: 100%;
-      display: none;
-      justify-content: center;
-      align-content: center;
-      flex-direction: column;
-      text-align: center;
-      font-size: large;
-      pointer-events: none;
-    }
-
-    .popup {
-      position: absolute;
-      display: flex;
-      flex-direction: column;
-      margin: 8px;
-      padding: 8px;
-      box-sizing: border-box;
-      border-radius: 8px;
-      background: #000;
-      opacity: 0.9;
-      color: #fff;
-      max-width: 300px;
-      z-index: 9;
-    }
-
-    .popup a,
-    .popup a:visited {
-      color: white;
-    }
-
-    .popup-close-button {
-      color: red;
-      font-size: 25px;
-      position: absolute;
-      right: 0;
-      top: 0;
-      border: 0;
-      cursor: pointer;
-      background-color: transparent;
-    }
-
-    .tooltip {
-      text-align: right;
-      position: absolute;
-      display: flex;
-      flex-direction: column;
-      margin: 8px;
-      padding: 8px;
-      box-sizing: border-box;
-      border-radius: 8px;
-      background: #000;
-      opacity: 0.9;
-      color: #fff;
-      max-width: 300px;
-      z-index: 9;
-      pointer-events: none;
-    }
-  </style>
 </head>
 <body>
-<div id="root"></div>
-<div id="touchInfo">Zum Bewegen der Karte mit zwei Fingern berühren.</div>
+<div id="root" class="container"></div>
+<div id="interactionInfo" class="interaction-info" style="display: none">Zum Bewegen der Karte mit zwei Fingern berühren.</div>
 <script type="application/javascript" src="https://api.mapbox.com/mapbox-gl-js/v1.8.1/mapbox-gl.js"></script>
 </body>
 </html>

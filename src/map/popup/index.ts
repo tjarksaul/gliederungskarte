@@ -4,6 +4,7 @@ import ogInfo from 'json/oginfo.json'
 import { OgInfos } from 'dtos'
 import { separator } from 'utils/array'
 import { Feature } from 'geojson'
+import './popup.scss'
 
 const ogInfos = ogInfo as OgInfos
 
@@ -30,7 +31,7 @@ function createPopup(hoveredFeature: Feature, point: Point): Node | undefined {
     popupContent = `
         <h4>${ogInfo.fullname}</h4>
         <p>${ogInfo.address.replace('\n', '<br/>')}</p>
-        <p>Weitere Infos unter <a href="${
+        <p>Weitere Infos unter <a class="popup__link" href="${
           ogInfo.website.url
         }" target="_blank">${ogInfo.website.print}</a>.</p>      
       `
@@ -40,7 +41,7 @@ function createPopup(hoveredFeature: Feature, point: Point): Node | undefined {
       .map(ags => ogInfos[ags])
       .map(
         info =>
-          `<a href="${info.website.url}" target="_blank">${info.shortname}</a>`,
+          `<a class="popup__link" href="${info.website.url}" target="_blank">${info.shortname}</a>`,
       )
       .reduce((acc, curr, idx, arr) => acc + separator(idx, arr) + curr, '')
       .substr(2)
@@ -53,21 +54,20 @@ function createPopup(hoveredFeature: Feature, point: Point): Node | undefined {
 
   let vertical = `top: ${y}px`
   const documentHeight = document.documentElement.clientHeight
-  if (y > (documentHeight / 2)) {
+  if (y > documentHeight / 2) {
     vertical = `bottom: ${documentHeight - y}px`
   }
 
   let horizontal = `left: ${x}px`
   const documentWidth = document.documentElement.clientWidth
-  if (x > (documentWidth / 2)) {
+  if (x > documentWidth / 2) {
     horizontal = `right: ${documentWidth - x}px`
   }
 
-
   const popup = createElementFromHTML(`
       <div class="popup" style="${vertical}; ${horizontal}"> 
-        <div class="popup-content">
-          <button class="popup-close-button" type="button" aria-label="Close popup">×</button>
+        <div id="popup__content" class="popup__content">
+          <button id="popup__close-button" class="popup__close-button" type="button" aria-label="Close popup">×</button>
           <div class="og-info">
             <h3>${Name}</h3>            
             ${popupContent}
@@ -78,10 +78,10 @@ function createPopup(hoveredFeature: Feature, point: Point): Node | undefined {
 
   popup.childNodes.forEach(value => {
     const val = value as Element
-    if (val.className === 'popup-content') {
+    if (val.className === 'popup__content') {
       value.childNodes.forEach(child => {
         const ch = child as Element
-        if (ch.className === 'popup-close-button') {
+        if (ch.id === 'popup__close-button') {
           const button = ch as HTMLButtonElement
           button.onclick = removePopup
         }

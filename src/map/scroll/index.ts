@@ -1,4 +1,5 @@
 import { Map, MapboxEvent } from 'mapbox-gl'
+import './scroll.scss'
 
 function isTouchEvent(
   e: MapboxEvent<MouseEvent | TouchEvent | undefined>,
@@ -13,7 +14,7 @@ function isTwoFingerTouch(e: MapboxEvent<TouchEvent>): boolean {
 let timeout: number | undefined
 
 function hideScrollInfo(): void {
-  const touchInfo = document.getElementById('touchInfo')
+  const touchInfo = document.getElementById('interactionInfo')
   if (touchInfo) {
     touchInfo.style.display = 'none'
   }
@@ -22,7 +23,7 @@ function hideScrollInfo(): void {
 }
 
 function showScrollInfo(touch: boolean): void {
-  const touchInfo = document.getElementById('touchInfo')
+  const touchInfo = document.getElementById('interactionInfo')
   if (touchInfo) {
     let text = 'Zum Bewegen der Karte mit zwei Fingern berühren.'
 
@@ -47,7 +48,7 @@ function showScrollInfoWithTimeout(touch = true): void {
   }, 3000)
 }
 
-export function disableOneFingerTouch(map: Map): Map {
+export function disableUnmodifiedZoomScroll(map: Map): Map {
   map.on('dragstart', event => {
     if (isTouchEvent(event) && !isTwoFingerTouch(event)) {
       showScrollInfoWithTimeout()

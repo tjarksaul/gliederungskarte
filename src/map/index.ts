@@ -3,7 +3,8 @@ import { mapboxApiKey } from 'config'
 import loadLayers from './layers'
 import popup from 'map/popup'
 import tooltip, { tooltipMouseLeave } from 'map/tooltip'
-import { disableOneFingerTouch } from 'map/touch'
+import { disableUnmodifiedZoomScroll } from 'map/scroll'
+import './map.scss'
 
 interface MapPosition {
   long: number
@@ -39,11 +40,11 @@ function map(
   map.on('mouseout', () => tooltipMouseLeave(map))
   map.on('mouseleave', () => tooltipMouseLeave(map))
 
-  disableOneFingerTouch(map)
+  disableUnmodifiedZoomScroll(map)
 
   return map
 }
 
-export { removePopup } from './popup'
+export { removePopup } from 'map/popup'
 
 export default map

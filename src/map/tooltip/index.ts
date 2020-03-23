@@ -1,5 +1,6 @@
 import { Map, MapMouseEvent } from 'mapbox-gl'
 import { createElementFromHTML } from 'utils'
+import './tooltip.scss'
 
 let tooltip: Node
 

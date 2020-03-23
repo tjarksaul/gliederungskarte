@@ -1,0 +1,30 @@
+.popup {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  margin: 8px;
+  padding: 8px;
+  box-sizing: border-box;
+  border-radius: 8px;
+  background: #000;
+  opacity: 0.9;
+  color: #fff;
+  max-width: 300px;
+  z-index: 9;
+}
+
+.popup__link,
+.popup__link:visited {
+  color: white;
+}
+
+.popup__close-button {
+  color: red;
+  font-size: 25px;
+  position: absolute;
+  right: 0;
+  top: 0;
+  border: 0;
+  cursor: pointer;
+  background-color: transparent;
+}
