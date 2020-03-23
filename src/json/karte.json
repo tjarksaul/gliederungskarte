@@ -164,10 +164,9 @@
       "type": "Feature",
       "properties": {
         "Name": "Loxstedt",
-        "AGS": "03 3 52 032",
-        "hasOG": false,
-        "OGname": null,
-        "ogAgsIds": ["03 3 52 050", "03 3 52 060"]
+        "AGS": "03 3 52 060",
+        "hasOG": true,
+        "OGname": "Hagen im Bremischen"
       },
       "geometry": {
         "type": "Polygon",
