@@ -1,5 +1,5 @@
 import { LngLatBoundsLike, Map } from 'mapbox-gl'
-import { mapboxApiKey } from 'config'
+import { mapboxApiKey, mapFitPadding, mapMinZoom } from 'config'
 import loadLayers from './layers'
 import popup from 'map/popup'
 import tooltip, { tooltipMouseLeave } from 'map/tooltip'
@@ -23,10 +23,11 @@ function map(
     style: 'mapbox://styles/mapbox/light-v10',
     center: [position.long, position.lat],
     zoom: position.zoom,
+    minZoom: mapMinZoom,
   })
 
   if (mapFit) {
-    map.fitBounds(mapFit)
+    map.fitBounds(mapFit, { padding: mapFitPadding })
   }
 
   map.on('load', () => {
