@@ -37,7 +37,7 @@ jobs:
       - run: npm ci
       - run: npx playwright install --with-deps chromium
       - name: Write .env
-        run: echo "MAPBOX_API_KEY=${{ secrets.MAPBOX_API_KEY }}" > .env
+        run: echo "MAPBOX_API_KEY=${{ secrets.MAPBOX_API_KEY_TEST }}" > .env
       - run: npm run test:e2e
       - uses: actions/upload-artifact@v4
         if: failure()
@@ -62,7 +62,7 @@ jobs:
       - run: npm ci
       - name: Build
         run: |
-          echo "MAPBOX_API_KEY=${{ secrets.MAPBOX_API_KEY }}" > .env
+          echo "MAPBOX_API_KEY=${{ secrets.MAPBOX_API_KEY_PROD }}" > .env
           npm run build
       - uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
