@@ -27,7 +27,7 @@
     "@typescript-eslint/parser": "^2.19.2",
     "ajv": "^8.20.0",
     "css-loader": "^7.1.5",
-    "eslint": "^6.8.0",
+    "eslint": "^10.15.0",
     "html-webpack-plugin": "^5.6.8",
     "jsdom": "^29.1.1",
     "mapbox-gl": "^1.8.1",
