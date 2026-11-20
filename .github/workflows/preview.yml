@@ -29,7 +29,7 @@ jobs:
       - name: Build
         if: github.event.action != 'closed'
         run: |
-          echo "MAPBOX_API_KEY=${{ secrets.MAPBOX_API_KEY }}" > .env
+          echo "MAPBOX_API_KEY=${{ secrets.MAPBOX_API_KEY_PREVIEW }}" > .env
           npm run build
       - uses: rossjrw/pr-preview-action@v1
         with:
