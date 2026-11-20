@@ -45,6 +45,18 @@ jobs:
           name: playwright-results
           path: test-results
 
+  preview-on-e2e-failure:
+    name: Deploy preview for failed E2E
+    needs: e2e
+    if: always() && github.event_name == 'pull_request' && needs.e2e.result == 'failure'
+    permissions:
+      contents: write
+      pull-requests: write
+    uses: ./.github/workflows/preview.yml
+    with:
+      force: true
+    secrets: inherit
+
   deploy:
     name: Deploy to FTP
     needs: [unit, e2e]
