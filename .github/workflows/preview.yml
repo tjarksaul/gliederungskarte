@@ -1,36 +1,114 @@
 name: PR preview
 
+# A preview is deployed for
+#  - every PR, except Dependabot minor/patch updates (they are merged automatically),
+#  - any PR whose E2E tests failed (called from ci.yml with force: true),
+#  - any PR where a maintainer comments "@actions preview".
 on:
   pull_request:
     types: [opened, reopened, synchronize, closed]
+  issue_comment:
+    types: [created]
+  workflow_call:
+    inputs:
+      force:
+        type: boolean
+        default: false
 
-concurrency: preview-${{ github.ref }}
-
-permissions:
-  contents: write
-  pull-requests: write
+concurrency: preview-${{ github.event.pull_request.number || github.event.issue.number }}
 
 jobs:
-  preview:
+  gate:
+    name: Decide whether to deploy
     runs-on: ubuntu-latest
-    # Secrets are not available to PRs from forks
-    if: github.event.pull_request.head.repo.full_name == github.repository
+    permissions:
+      contents: read
+      pull-requests: read
+    outputs:
+      mode: ${{ steps.decide.outputs.mode }}
+      pr: ${{ steps.decide.outputs.pr }}
+      sha: ${{ steps.decide.outputs.sha }}
+    steps:
+      - id: meta
+        if: github.event_name == 'pull_request' && github.actor == 'dependabot[bot]' && github.event.action != 'closed'
+        uses: dependabot/fetch-metadata@v2
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+      - id: decide
+        env:
+          EVENT: ${{ github.event_name }}
+          ACTION: ${{ github.event.action }}
+          FORCE: ${{ inputs.force }}
+          ACTOR: ${{ github.actor }}
+          UPDATE_TYPE: ${{ steps.meta.outputs.update-type }}
+          REPO: ${{ github.repository }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+          PR_SHA: ${{ github.event.pull_request.head.sha }}
+          PR_HEAD_REPO: ${{ github.event.pull_request.head.repo.full_name }}
+          IS_PR_COMMENT: ${{ github.event.issue.pull_request != null }}
+          ISSUE_NUMBER: ${{ github.event.issue.number }}
+          COMMENT_BODY: ${{ github.event.comment.body }}
+          ASSOCIATION: ${{ github.event.comment.author_association }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          mode=skip
+          pr="$PR_NUMBER"
+          sha="$PR_SHA"
+
+          if [ "$EVENT" = issue_comment ]; then
+            if [ "$IS_PR_COMMENT" = true ] \
+              && printf '%s' "$COMMENT_BODY" | grep -qiF '@actions preview' \
+              && { [ "$ASSOCIATION" = OWNER ] || [ "$ASSOCIATION" = MEMBER ] || [ "$ASSOCIATION" = COLLABORATOR ]; }; then
+              read -r PR_HEAD_REPO sha < <(gh api "repos/$REPO/pulls/$ISSUE_NUMBER" --jq '.head.repo.full_name + " " + .head.sha')
+              pr="$ISSUE_NUMBER"
+              mode=deploy
+            fi
+          elif [ "$ACTION" = closed ]; then
+            mode=remove
+          elif [ "$FORCE" = true ]; then
+            mode=deploy
+          elif [ "$ACTOR" != 'dependabot[bot]' ] || [ "$UPDATE_TYPE" = 'version-update:semver-major' ]; then
+            mode=deploy
+          fi
+
+          # Secrets are not available for builds of forks
+          if [ "$mode" != skip ] && [ "$PR_HEAD_REPO" != "$REPO" ]; then
+            mode=skip
+          fi
+
+          echo "mode=$mode" >> "$GITHUB_OUTPUT"
+          echo "pr=$pr" >> "$GITHUB_OUTPUT"
+          echo "sha=$sha" >> "$GITHUB_OUTPUT"
+
+  preview:
+    needs: gate
+    if: needs.gate.outputs.mode != 'skip'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
     env:
       NODE_OPTIONS: --openssl-legacy-provider
     steps:
       - uses: actions/checkout@v7
+        with:
+          ref: ${{ needs.gate.outputs.sha }}
       - uses: actions/setup-node@v7
-        if: github.event.action != 'closed'
+        if: needs.gate.outputs.mode == 'deploy'
         with:
           node-version: 22
           cache: npm
-      - if: github.event.action != 'closed'
+      - if: needs.gate.outputs.mode == 'deploy'
         run: npm ci
       - name: Build
-        if: github.event.action != 'closed'
+        if: needs.gate.outputs.mode == 'deploy'
         run: |
           echo "MAPBOX_API_KEY=${{ secrets.MAPBOX_API_KEY_PREVIEW }}" > .env
           npm run build
       - uses: rossjrw/pr-preview-action@v1
         with:
           source-dir: ./dist
+          action: ${{ needs.gate.outputs.mode }}
+          pr-number: ${{ needs.gate.outputs.pr }}
+          deploy-commit-message: Deploy preview for PR ${{ needs.gate.outputs.pr }} 🛫
+          remove-commit-message: Remove preview for PR ${{ needs.gate.outputs.pr }} 🛬
