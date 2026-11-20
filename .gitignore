@@ -15,3 +15,7 @@ node_modules
 *.pdf
 .scannerwork
 *.log
+
+# playwright
+test-results
+playwright-report
