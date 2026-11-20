@@ -18,7 +18,7 @@ describe('build', () => {
       execFileSync(bin('webpack'), ['--config', 'webpack.config.prod.js', '--output-path', out], {
         cwd: root,
         stdio: 'pipe',
-        env: { ...process.env, NODE_OPTIONS: '--openssl-legacy-provider', MAPBOX_API_KEY: 'test' },
+        env: { ...process.env, MAPBOX_API_KEY: 'test' },
       })
       const files = readdirSync(out)
       expect(files).toContain('index.html')
