@@ -31,7 +31,7 @@ jobs:
     steps:
       - id: meta
         if: github.event_name == 'pull_request' && github.actor == 'dependabot[bot]' && github.event.action != 'closed'
-        uses: dependabot/fetch-metadata@v2
+        uses: dependabot/fetch-metadata@v3
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
       - id: decide
