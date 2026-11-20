@@ -16,7 +16,7 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
       # Major updates are reviewed and merged by hand.
-      # Merges only once all required status checks (the Tests workflow) have passed.
+      # Merges only once all required status checks (the CI workflow) have passed.
       - if: steps.metadata.outputs.update-type != 'version-update:semver-major'
         run: gh pr merge --auto --squash "$PR_URL"
         env:

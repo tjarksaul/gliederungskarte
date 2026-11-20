@@ -1,4 +1,4 @@
-name: Tests
+name: CI
 
 on:
   push:
@@ -44,3 +44,33 @@ jobs:
         with:
           name: playwright-results
           path: test-results
+
+  deploy:
+    name: Deploy to FTP
+    needs: [unit, e2e]
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    concurrency: production-deploy
+    env:
+      NODE_OPTIONS: --openssl-legacy-provider
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - name: Build
+        run: |
+          echo "MAPBOX_API_KEY=${{ secrets.MAPBOX_API_KEY }}" > .env
+          npm run build
+      - uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_HOST }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          protocol: ftps
+          server-dir: ${{ secrets.FTP_PATH }}
+          local-dir: ./dist/
+          # Replaces everything that already exists in the target directory
+          dangerous-clean-slate: true
