@@ -6,7 +6,6 @@ export interface Urlable {
 export interface OgInfo {
   shortname: string
   fullname: string
-  address: string
   telefon?: Urlable
   website: Urlable
 }

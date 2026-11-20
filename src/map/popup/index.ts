@@ -41,7 +41,6 @@ async function createPopup(
     const ogInfo = infos[AGS]
     popupContent = `
         <h4>${ogInfo.fullname}</h4>
-        <p>${ogInfo.address.replace('\n', '<br/>')}</p>
         <p>Weitere Infos unter <a class="popup__link" href="${
           ogInfo.website.url
         }" target="_blank">${ogInfo.website.print}</a>.</p>      
