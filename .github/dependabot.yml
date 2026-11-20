@@ -4,7 +4,22 @@ updates:
     directory: /
     schedule:
       interval: weekly
+    # Major updates are not grouped and get one PR each
+    groups:
+      npm-minor:
+        patterns: ['*']
+        update-types: [minor]
+      npm-patch:
+        patterns: ['*']
+        update-types: [patch]
   - package-ecosystem: github-actions
     directory: /
     schedule:
       interval: weekly
+    groups:
+      actions-minor:
+        patterns: ['*']
+        update-types: [minor]
+      actions-patch:
+        patterns: ['*']
+        update-types: [patch]
