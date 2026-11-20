@@ -39,7 +39,7 @@ jobs:
       - name: Write .env
         run: echo "MAPBOX_API_KEY=${{ secrets.MAPBOX_API_KEY_TEST }}" > .env
       - run: npm run test:e2e
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         if: failure()
         with:
           name: playwright-results
