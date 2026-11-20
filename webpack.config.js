@@ -43,14 +43,12 @@ module.exports = {
     publicPath: './',
   },
   devServer: {
-    contentBase: path.resolve(APP_DIR, 'dist'),
-    publicPath: '/',
+    static: DIST_PATH,
+    devMiddleware: { publicPath: '/' },
     hot: true,
     port: 3000,
-    watchContentBase: true,
   },
   plugins: [
-    new webpack.HotModuleReplacementPlugin(),
     new HtmlWebpackPlugin({
       title: 'Bezirkskarte',
       template: path.resolve(__dirname, 'public/index.html'),

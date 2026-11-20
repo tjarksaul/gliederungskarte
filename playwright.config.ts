@@ -10,10 +10,9 @@ export default defineConfig({
     },
   },
   webServer: {
-    command: 'npx webpack-dev-server --config ./webpack.config.js',
+    command: 'npx webpack serve --config ./webpack.config.js',
     url: 'http://localhost:3000',
     reuseExistingServer: true,
     timeout: 120_000,
-    env: { NODE_OPTIONS: '--openssl-legacy-provider' },
   },
 })
